@@ -53,6 +53,29 @@ button:hover {
   box-shadow: 0 0 4px #111;
 }
 
+input, select{
+  height: 32px;
+  border: 1px solid #05142a;
+  border-radius: 4px;
+  padding: 0 4px;
+}
+
+label {
+  margin-top: 14px;
+}
+
+.flex{
+  display: flex;
+}
+
+.flex input{
+  margin-right: 4px;
+}
+
+.border-red{
+  border: 1px solid red;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

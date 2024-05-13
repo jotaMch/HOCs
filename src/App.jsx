@@ -6,17 +6,17 @@ import HeaderFormBank from './components/transform/transformHeader/HeaderBank';
 function App() {
   const [passValueBank, setPassValueBank] = useState('');
   const [passValueShop, setPassValueShop] = useState('');
+  const [borderErro, setBorderErro] = useState(false);
   
-  // Inicializa o título com base em openShop
   const [title, setTitle] = useState(false)
-  // Atualiza o título quando openShop mudar
-  useEffect(() => {
-    console.log(title)
-  }, []);
   
-  const handleChange = (e) => {
+  const handleChangeBank = (e) => {
     setPassValueBank(e.target.value);
+  }
+  
+  const handleChangeShop = (e) => {
     setPassValueShop(e.target.value);
+    console.log(passValueShop.length)
   }
 
   return (
@@ -29,15 +29,27 @@ function App() {
         valuePassBank={passValueBank}
         setValueShop={setPassValueShop}
         valuePassShop={passValueShop}
-        inputPass={() => (
+        setBorderErro={setBorderErro}
+        borderErro={borderErro}
+
+        inputPassBank={() => (
           <input 
             type='password' 
             placeholder='password'
             value={passValueBank} 
-            onChange={handleChange}
+            onChange={handleChangeBank}
           />
-
-        )} />
+        )} 
+        inputPassShop={() => (
+          <input 
+            className={borderErro && passValueShop.length > 0 ? "border-red" : ""}
+            type='password' 
+            placeholder='password'
+            value={passValueShop} 
+            onChange={handleChangeShop}
+          />
+        )} 
+        />
     </div>    
   );
 }
