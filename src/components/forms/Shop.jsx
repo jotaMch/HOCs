@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 function ShopComponent({ setValueConfirm, messegeCheck, clickRegister, inputPassShop, valChar, valNumber, valuePassShop, setConfirmPass, confirmPass, lengthPass }) {
-    const [inputOk, setInputOk] = useState(false)
+    
     
     return (
         <>

@@ -54,8 +54,7 @@ function withPasswordValidation(ComponentBank, ComponentShop) {
             
         }, [valuePassShop]);    
         
-        const clickRegister = (e) => {            
-            e.preventDefault()
+        const clickRegister = (e) => {    
 
             const hasNumberShop = /\d/.test(valuePassShop);
             const hasSpecialCharShop = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(valuePassShop);
@@ -65,9 +64,9 @@ function withPasswordValidation(ComponentBank, ComponentShop) {
             if (hasNumberShop && hasSpecialCharShop && isPasswordLongEnough && valueConfirm === valuePassShop) {
                 setMessegeCheck(true);
             } else {
-                // Se alguma das verificações falhar, você pode mostrar uma mensagem de erro ou tomar outra ação
                 alert("A senha não atende aos critérios de validação");
-            }
+                return props.setBorderErro(true)
+            } 
         }
         
         
@@ -79,7 +78,9 @@ function withPasswordValidation(ComponentBank, ComponentShop) {
                 setMessegeCheck(true);
             } else {
                 setErrorPassword("Sua senha está correta!")
-                setRegisterOk(false)
+                setTimeout(() => {
+                    setRegisterOk(false)
+                }, 1000);
             }
             if (!idadeSelecionada) {
                 alert("Por favor, selecione se você é maior de 18 anos.");

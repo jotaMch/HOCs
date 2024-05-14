@@ -57,7 +57,7 @@ export default function BankComponent({setIdadeSelecionada, inputPassBank, click
                     <div className="flex">
                         <input type="radio" id="nao" 
                         name="idade" value="nao" 
-                        onChange={(e) => setIdadeSelecionada(e.target.value === 'sim')} />
+                        onChange={(e) => setIdadeSelecionada(e.target.value === 'nao')} />
                         <label htmlFor="nao">Não</label>
                     </div>
                 </div>
