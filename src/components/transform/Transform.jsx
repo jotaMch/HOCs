@@ -7,29 +7,21 @@ function withPasswordValidation(ComponentBank, ComponentShop) {
         const [charValueBank, setCharValueBank] = useState("");
         const [numberValueBank, setNumberValueBank] = useState("");
 
+        
+        const [idadeSelecionada, setIdadeSelecionada] = useState(false);
+        const [registerOk, setRegisterOk] = useState(true);
+
         const [charValueShop, setCharValueShop] = useState("");
         const [numberValueShop, setNumberValueShop] = useState("");
 
         const [lengthPass, setLengthPass] = useState("");
         const [confirmPass, setConfirmPass] = useState(true);
 
-        useEffect(() => {
-            const hasNumberBank = /\d/.test(valuePassBank);
-            const hasSpecialCharBank = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(valuePassBank);
-            
-            if (!hasNumberBank) {
-                setNumberValueBank("A senha deve conter pelo menos um número");
-            } else {
-                setNumberValueBank("");
-            }
+        const [valueConfirm, setValueConfirm] = useState("")
+        const [messegeCheck, setMessegeCheck] = useState(false);
 
-            if (!hasSpecialCharBank) {
-                setCharValueBank("A senha deve conter pelo menos um caractere especial");
-            } else {
-                setCharValueBank("");
-            }
+        const [errorPassword, setErrorPassword] = useState("");
 
-        }, [valuePassBank]); 
 
         useEffect(() => {
             const hasNumberShop = /\d/.test(valuePassShop);
@@ -59,15 +51,46 @@ function withPasswordValidation(ComponentBank, ComponentShop) {
                 props.setBorderErro(false)
             }
 
-            const clickRegister = (e) => {
-                e.preventdefault()
+            
+        }, [valuePassShop]);    
+        
+        const clickRegister = (e) => {            
+            e.preventDefault()
 
-
-            } 
-        }, [valuePassShop]);         
-
+            const hasNumberShop = /\d/.test(valuePassShop);
+            const hasSpecialCharShop = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(valuePassShop);
+            const isPasswordLongEnough = valuePassShop.length >= 10;
+        
+        
+            if (hasNumberShop && hasSpecialCharShop && isPasswordLongEnough && valueConfirm === valuePassShop) {
+                setMessegeCheck(true);
+            } else {
+                // Se alguma das verificações falhar, você pode mostrar uma mensagem de erro ou tomar outra ação
+                alert("A senha não atende aos critérios de validação");
+            }
+        }
+        
+        
+        
+        const clickConfirmBank = (e) => {
+            e.preventDefault()
+            if(valuePassBank !== valuePassShop){
+                setErrorPassword("Sua senha está incorreta!")
+                setMessegeCheck(true);
+            } else {
+                setErrorPassword("Sua senha está correta!")
+                setRegisterOk(false)
+            }
+            if (!idadeSelecionada) {
+                alert("Por favor, selecione se você é maior de 18 anos.");
+                
+            }
+        }
+        
         return (
-            <>
+            <div className="forms-content">   
+                {registerOk &&  
+                !messegeCheck &&
                 <ComponentShop 
                     {...props}
                     inputPassShop={inputPassShop} 
@@ -78,14 +101,21 @@ function withPasswordValidation(ComponentBank, ComponentShop) {
                     setConfirmPass={setConfirmPass}
                     lengthPass={valuePassShop.length > 0 ? lengthPass : ""}
                     borderErro={props.borderErro}
-                />
+                    messegeCheck={messegeCheck}
+                    clickRegister={clickRegister}
+                    setValueConfirm={setValueConfirm}
+                />}
+                
+                {registerOk &&  messegeCheck &&
                 <ComponentBank 
                     {...props}
                     inputPassBank={inputPassBank} 
-                    valChar={valuePassBank.length > 0 ? charValueBank : ""}
-                    valNumber={valuePassBank.length > 0 ? numberValueBank : ""}
-                />
-            </>
+                    clickConfirmBank={clickConfirmBank}
+                    errorPassword={errorPassword}
+                    setIdadeSelecionada={setIdadeSelecionada}
+                />}
+                {!registerOk && <p className="parabens">Parabéns, gora você faz parte da Rc Bank</p>}
+            </div>
         );
     };
 }

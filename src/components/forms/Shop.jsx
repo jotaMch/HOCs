@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
 
-function ShopComponent({ inputPassShop, valChar, valNumber, valuePassShop, setConfirmPass, confirmPass, lengthPass }) {
-    const clickRegister = () => {
-        
-    }
+function ShopComponent({ setValueConfirm, messegeCheck, clickRegister, inputPassShop, valChar, valNumber, valuePassShop, setConfirmPass, confirmPass, lengthPass }) {
+    const [inputOk, setInputOk] = useState(false)
+    
     return (
         <>
             <form>
-                <h3>Cadastre-se em nossa plataforma Rc</h3>
-                <input type="text" placeholder="Seu nome" />
-                <input type="email" placeholder="E-mail" />
-                <input type="number" placeholder="(00) 00000-0000" />
+                <h3>1 - Cadastre-se em nossa plataforma Rc</h3>
+                <input type="text" placeholder="Seu nome" required />
+                <input type="email" placeholder="E-mail" required />
+
                 {inputPassShop()}
                 <span>{valChar}</span>
                 <span>{valNumber}</span>
@@ -20,15 +19,18 @@ function ShopComponent({ inputPassShop, valChar, valNumber, valuePassShop, setCo
                     placeholder="confirm password"
                     onChange={(e) => {
                         const confirmPassword = e.target.value;
-                        // Verifica se a senha de confirmação corresponde à senha original
+                        setValueConfirm(e.target.value)
+                        
                         setConfirmPass(confirmPassword === valuePassShop);
                     }}
+                required
                 />
                 {!confirmPass && <span>As senhas não correspondem</span>}
                 <button type="submit" onClick={clickRegister}>
                     Cadastre-se
                 </button>
             </form>
+            {messegeCheck && <p>deu certo</p>}
         </>
     );
 }
